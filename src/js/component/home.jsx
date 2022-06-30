@@ -1,26 +1,57 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
+import Navbar from "./navbar.jsx"
+import Card from "./card.jsx"
+import Paginas from "./paginas.jsx";
 //include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+
 
 //create your first component
+
+
 const Home = () => {
+	
+
+	const [personajes, setpersonajes] = useState ([]);
+
+	const url = "https://rickandmortyapi.com/api/character"
+	
+	const fetcCharaters = (url)  => {
+	fetch(url)
+		.then(response => response.json())
+		.then(data => setpersonajes(data.results))
+		.catch(error => console.log(error))
+
+
+	};
+	
+	const onPrevius =() => {
+		fetcCharaters(info.prev)
+
+
+	}
+	const onNext =() => {
+		fetcCharaters(url)
+			
+		}
+
+
+	useEffect(() => {
+		fetcCharaters(url);
+	}, [])
 	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+
+		<>
+		<Navbar brand="aprendiendo apis "/>
+<Paginas />
+		<div className="container mt-5">
+
+	<Card characters={personajes}/>
+	<Paginas/>
+</div>
+		
+	</>
+	) 
 };
 
 export default Home;
